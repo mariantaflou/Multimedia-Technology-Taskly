@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.taskmanager.TaskViewController" style="-fx-background-color: #f8f0e3;">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <Label text="Taskly" style="-fx-font-size: 24pt; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+    <Label text="Get Organized, Stay Productive" style="-fx-font-size: 10pt; -fx-font-style: italic; -fx-text-fill: #777777;"/>
+
+    <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="680.0" spacing="20.0">
+        <Label text="Total Tasks:" style="-fx-font-weight: bold; -fx-text-fill: #546e7a;"/>
+        <Label fx:id="totalTasksLabel" text="0" style="-fx-text-fill: #e67e22;"/>
+        <Label text="Completed:" style="-fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+        <Label fx:id="completedTasksLabel" text="0" style="-fx-text-fill: #27ae60;"/>
+        <Label text="Delayed:" style="-fx-font-weight: bold; -fx-text-fill: #c0392b;"/>
+        <Label fx:id="delayedTasksLabel" text="0" style="-fx-text-fill: #ffa500;"/>
+        <Label text="Due This Week:" style="-fx-font-weight: bold; -fx-text-fill: #e67e22 ;"/>
+        <Label fx:id="dueWithinWeekLabel" text="0" style="-fx-text-fill: #e67e22 ;"/>
+    </HBox>
+
+    <HBox spacing="10.0">
+        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+            <Label text="Task Details" style="-fx-font-weight: bold; -fx-text-fill: #34495e;" />
+            <GridPane vgap="5" hgap="5">
+                <Label text="Title:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-text-fill: #444444;"/>
+                <TextField fx:id="titleField" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="2" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+
+                <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-text-fill: #444444;"/>
+                <TextArea fx:id="descriptionField" wrapText="true" prefHeight="80" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+
+                <Label text="Category:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-text-fill: #444444;"/>
+                <ComboBox fx:id="categoryComboBox" prefWidth="150" GridPane.rowIndex="2" GridPane.columnIndex="1" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+                <Button text="Manage Categories" onAction="#manageCategories" GridPane.rowIndex="2" GridPane.columnIndex="2" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+                <Label text="Priority:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-text-fill: #444444;"/>
+                <ChoiceBox fx:id="priorityChoiceBox" prefWidth="150" GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+                <Button text="Manage Priorities" onAction="#managePriorities" GridPane.rowIndex="3" GridPane.columnIndex="2" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+                <Label text="Deadline:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-text-fill: #444444;"/>
+                <DatePicker fx:id="deadlinePicker" prefWidth="150" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.columnSpan="2" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+
+                <Label text="Status:" GridPane.rowIndex="5" GridPane.columnIndex="0" style="-fx-text-fill: #444444;"/>
+                <ChoiceBox fx:id="statusChoiceBox" prefWidth="150" GridPane.rowIndex="5" GridPane.columnIndex="1" GridPane.columnSpan="2" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;">
+                    <style>
+                        .choice-box .open { -fx-background-color: #f0f0f0; } /* Light Gray for OPEN */
+                        .choice-box .in-progress { -fx-background-color: #ffe0b2; } /* Light Orange for IN_PROGRESS */
+                        .choice-box .completed { -fx-background-color: #aed581; } /* Lime Green for COMPLETED */
+                    </style>
+                </ChoiceBox>
+            </GridPane>
+
+            <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-padding: 10 0 0 0;">
+                <Button text="Add Task" onAction="#addTask" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button text="Update Task" onAction="#updateTask" style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button text="Remove Task" onAction="#removeTask" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button text="View Delayed Tasks" onAction="#handleViewDelayedTasks" style="-fx-background-color: #9b59b6; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+            <Label text="Task List" style="-fx-font-weight: bold; -fx-text-fill: #34495e;" />
+            <HBox spacing="5.0" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="Search tasks..." HBox.hgrow="ALWAYS" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+                <ComboBox fx:id="prioritySearchComboBox" promptText="Priority" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+                <ComboBox fx:id="categorySearchComboBox" promptText="Category" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+                <Button text="Search" onAction="#searchTasks" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button text="Clear Search" onAction="#clearSearch" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            </HBox>
+            <ListView fx:id="taskListView" VBox.vgrow="ALWAYS" style="-fx-background-color: #fefefe; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+        </VBox>
+    </HBox>
+
+    <VBox spacing="10.0">
+        <Label text="Reminders" style="-fx-font-weight: bold; -fx-text-fill: #34495e;" />
+        <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <ChoiceBox fx:id="reminderTypeChoiceBox" prefWidth="150" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3; -fx-text-fill: #555555;"/>
+            <DatePicker fx:id="reminderDatePicker" prefWidth="150" promptText="Select Date (if specific)" style="-fx-background-color: #ffffff; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+            <Button text="Add Reminder" onAction="#addReminder" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+        <ListView fx:id="reminderListView" prefHeight="200.0" style="-fx-background-color: #fefefe; -fx-border-color: #d3d3d3; -fx-border-radius: 3;"/>
+        <HBox spacing="10.0" alignment="CENTER_LEFT" style="-fx-padding: 10 0 0 0;">
+            <Button text="Delete Reminder" onAction="#deleteReminder" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+    </VBox>
+</VBox>
